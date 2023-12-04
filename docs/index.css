@@ -7,7 +7,7 @@
 
 .app {
     height: 100vh;
-    background-color: rgb(137, 139, 139);
+    background-color: #232d3f;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -21,13 +21,33 @@
 }
 
 .gameContainer {
-    width: 65.9rem;
+    width: 43.9rem;
     /* border: 1px solid white; */
+}
+
+.scoreContainer {
+    width: 100%;
+    height: 4rem;
+    background-color: #008170;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.score {
+    color: white;
+    font-family: 'Mukta', serif;
+    font-size: 2rem;
+}
+
+.score span {
+    font-size: 2rem;
+    font-weight: 800;
 }
 
 .gameBoardArea {
     width: 100%;
-    height: 65.9rem;
+    height: 43.9rem;
     background-color: aliceblue;
     display: flex;
     flex-wrap: wrap;
@@ -43,12 +63,47 @@
 .snakeCell {
     background-color: rgb(255, 140, 0);
 }
+.foodCell {
+    background-color: red;
+    box-shadow: 0 0 6px 2px red;
+}
+
+.foodCell.snakeCell {
+    background-color: rgb(255, 72, 0);
+    box-shadow: none;
+    transform: scale(1.3, 1.3);
+}
 
 .cell.first {
     background-color: aqua;
 }
 
 .controlsContainer {
+}
+
+.resetController {
+    width: 100%;
+    height: 4rem;
+    background-color: #008170;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.resetController:hover {
+    /* transform: scale(1.02, 1.02); */
+    background-color: #009783;
+
+}
+
+.reset {
+    margin: auto;
+    font-size: 2rem;
+    font-weight: 700;
+    color: white;
+    font-family: 'Dosis', serif;
 }
 
 .controls {
