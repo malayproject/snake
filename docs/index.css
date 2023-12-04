@@ -12,16 +12,21 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    position: relative;
 }
 
 .appHeader {
     font-size: 5rem;
     color: rgb(240, 191, 117);
     font-family: 'Allan', serif;
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 2rem 10rem;
 }
 
 .gameContainer {
-    width: 43.9rem;
+    width: 65.9rem;
 }
 
 .scoreContainer {
@@ -46,7 +51,7 @@
 
 .gameBoardArea {
     width: 100%;
-    height: 43.9rem;
+    height: 65.9rem;
     background-color: aliceblue;
     display: flex;
     flex-wrap: wrap;
@@ -106,14 +111,14 @@
     background-color: rgb(252, 214, 165);
     display: grid;
     grid-template-columns: repeat(5, 1fr);
-    grid-template-rows: repeat(4, 1fr);
+    grid-template-rows: repeat(6, 1fr);
     gap: 1rem;
 }
 
 .controls * {
     background-color: rgb(255, 140, 0);
-    width: 4rem;
-    height: 3rem;
+    width: 5rem;
+    height: 4rem;
     margin: auto;
     box-shadow: 2px 3px 5px 0px  grey;
 }

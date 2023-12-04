@@ -15,7 +15,6 @@ let intervalId;
 
 function callbackFnCreator(snake) {
   return function callbackFn(e) {
-    console.log(e.target);
     let key;
     switch (e.keyCode) {
       case 37:
@@ -43,7 +42,7 @@ function callbackFnCreator(snake) {
     clearInterval(intervalId);
     intervalId = setInterval(
       () => snake.moveBody(e.keyCode, intervalId),
-      Math.max(80, 180 - snake.length * 3)
+      Math.max(70, 160 - snake.length * 3)
     );
   };
 }
@@ -51,9 +50,8 @@ function callbackFnCreator(snake) {
 function generateFoodCell(snake) {
   let foodCellId;
   do {
-    foodCellId = Math.floor(Math.random() * 1600);
+    foodCellId = Math.floor(Math.random() * 3600);
   } while (snake.bodyCellsSet.has(foodCellId));
-  console.log(`count: ${snake.length - 1}`);
   document.querySelector(`#cell${foodCellId}`).classList.add("foodCell");
 }
 
@@ -67,7 +65,7 @@ function reset() {
 function boardSetUp() {
   gameBoardEl.style.backgroundColor = "#005b41";
   gameBoardEl.innerHTML = "";
-  const totalCells = 1600;
+  const totalCells = 3600;
   for (let i = 0; i < totalCells; i++) {
     const cellEl = document.createElement("div");
     cellEl.id = `cell${i}`;
@@ -94,13 +92,12 @@ function init(e) {
 
 class SnakeBody {
   constructor() {
-    this.head = 820;
+    this.head = 1830;
     this.body = [this.head];
     this.bodyCellsSet = new Set(this.body);
     this.length = 1;
     this.velocity = null;
     this.speed = 180;
-    console.log(this.bodyCellsSet);
     this.body.forEach((cell) => {
       document.querySelector(`#cell${cell}`).classList.add("snakeCell");
     });
@@ -114,26 +111,25 @@ class SnakeBody {
     return this.bodyCellsSet.has(cellId);
   }
   checkWallOrSelf(newVelocity) {
-    console.log("checkWall called");
     const head = this.body[0];
     switch (newVelocity) {
       case 37:
-        if (head % 40 === 0 || this.bodyCellsSet.has(head - 1)) {
+        if (head % 60 === 0 || this.bodyCellsSet.has(head - 1)) {
           return true;
         }
         break;
       case 38:
-        if (head < 40 || this.bodyCellsSet.has(head - 40)) {
+        if (head < 60 || this.bodyCellsSet.has(head - 60)) {
           return true;
         }
         break;
       case 39:
-        if (head % 40 === 39 || this.bodyCellsSet.has(head + 1)) {
+        if (head % 60 === 59 || this.bodyCellsSet.has(head + 1)) {
           return true;
         }
         break;
       case 40:
-        if (head > 1599 || this.bodyCellsSet.has(head + 40)) {
+        if (head > 3599 || this.bodyCellsSet.has(head + 60)) {
           return true;
         }
         break;
@@ -168,7 +164,7 @@ class SnakeBody {
         }
         break;
       case DIRECTIONS.UP:
-        if (foodCellId === this.body[0] - 40) {
+        if (foodCellId === this.body[0] - 60) {
           this.length = this.body.unshift(foodCellId);
           document.querySelector(".scoreCount").innerText = this.length - 1;
           document
@@ -188,7 +184,7 @@ class SnakeBody {
         }
         break;
       case DIRECTIONS.DOWN:
-        if (foodCellId === this.body[0] + 40) {
+        if (foodCellId === this.body[0] + 60) {
           this.length = this.body.unshift(foodCellId);
           document.querySelector(".scoreCount").innerText = this.length - 1;
           document
@@ -198,7 +194,6 @@ class SnakeBody {
         }
         break;
       default:
-        console.log("default");
         return;
     }
 
@@ -213,13 +208,13 @@ class SnakeBody {
             bodyCell -= 1;
             break;
           case DIRECTIONS.UP:
-            bodyCell -= 40;
+            bodyCell -= 60;
             break;
           case DIRECTIONS.RIGHT:
             bodyCell += 1;
             break;
           default:
-            bodyCell += 40;
+            bodyCell += 60;
         }
       } else {
         const temp = bodyCell;
@@ -230,7 +225,6 @@ class SnakeBody {
       document.querySelector(`#cell${bodyCell}`).classList.add("snakeCell");
     });
     const foodSnakeCells = document.querySelectorAll(".snakeCell.foodCell");
-    console.log(foodSnakeCells, 1112);
     foodSnakeCells.forEach((foodSnakeCell) => {
       if (foodSnakeCell.id === `cell${this.body.at(-1)}`) {
         document
