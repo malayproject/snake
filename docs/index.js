@@ -64,12 +64,8 @@ function reset() {
   window.removeEventListener("click", init);
 }
 
-function init(e) {
-  if (e?.target.innerText === "Reset") {
-    reset();
-  }
-
-  gameBoardEl.style.backgroundColor = "#005b41"; //"#5054cd" blue
+function boardSetUp() {
+  gameBoardEl.style.backgroundColor = "#005b41";
   gameBoardEl.innerHTML = "";
   const totalCells = 1600;
   for (let i = 0; i < totalCells; i++) {
@@ -79,11 +75,21 @@ function init(e) {
     cellEl.style.height = "1rem";
     gameBoardEl.appendChild(cellEl);
   }
+}
+
+function init(e) {
+  if (e && e.target.innerText !== "Reset") return;
+  if (e?.target.innerText === "Reset") {
+    reset();
+  }
+  boardSetUp();
   const snake = new SnakeBody();
   generateFoodCell(snake);
   callbackFnInstance = callbackFnCreator(snake);
   window.addEventListener("keydown", callbackFnInstance);
-  window.addEventListener("click", init);
+  if (e === undefined || e.target.innerText === "Reset") {
+    window.addEventListener("click", init);
+  }
 }
 
 class SnakeBody {
@@ -140,8 +146,7 @@ class SnakeBody {
     const isHittingWallOrSelf = this.checkWallOrSelf(newVelocity);
     if (isHittingWallOrSelf) {
       alert("GAME OVER, TRY AGAIN!!!");
-      clearInterval(intervalId);
-      window.removeEventListener("keydown", callbackFnInstance);
+      reset();
       init();
       return;
     }
@@ -159,7 +164,6 @@ class SnakeBody {
           document
             .querySelector(`#cell${foodCellId}`)
             .classList.add("snakeCell");
-          // foodCellEl.classList.remove("foodCell");
           generateFoodCell(this);
         }
         break;
@@ -170,7 +174,6 @@ class SnakeBody {
           document
             .querySelector(`#cell${foodCellId}`)
             .classList.add("snakeCell");
-          // foodCellEl.classList.remove("foodCell");
           generateFoodCell(this);
         }
         break;
@@ -181,7 +184,6 @@ class SnakeBody {
           document
             .querySelector(`#cell${foodCellId}`)
             .classList.add("snakeCell");
-          // foodCellEl.classList.remove("foodCell");
           generateFoodCell(this);
         }
         break;
@@ -192,7 +194,6 @@ class SnakeBody {
           document
             .querySelector(`#cell${foodCellId}`)
             .classList.add("snakeCell");
-          // foodCellEl.classList.remove("foodCell");
           generateFoodCell(this);
         }
         break;
@@ -237,22 +238,8 @@ class SnakeBody {
           .classList.remove("foodCell");
       }
     });
-
-    // if (
-    //   document.querySelector(".snakeCell.foodCell")?.id ===
-    //   `cell${this.body.at(-1)}`
-    // ) {
-    //   document
-    //     .querySelector(`#cell${this.body.at(-1)}`)
-    //     .classList.remove("foodCell");
-    // }
-
-    // foodCellHandler(this, tempCell);
-    // console.log(this.body);
     this.bodyCellsSet.clear();
     this.bodyCellsSet = new Set(this.body);
-    // console.log("1091", this.body);
-    // console.log("1091", this.bodyCellsSet);
   }
 }
 
